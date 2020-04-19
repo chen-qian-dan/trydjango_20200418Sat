@@ -18,7 +18,8 @@ def about_view(request, *args, **kwargs):
     # context is a dictionary consists of any data types. 
     my_context = {
         'my_text': 'This is about us.',
-        'my_number': 123
+        'my_number': 123, 
+        'my_list': [123, 234, 'qian']
     }
     return render(request, 'about.html', my_context)
     
