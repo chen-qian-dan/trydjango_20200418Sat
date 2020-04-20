@@ -11,11 +11,11 @@
     <ul>
         {% for my_sub_item in my_list %}
             {% if my_sub_item %}
-                <li>{{ forloop.counter }} - {{ my_sub_item }}</li>
+                <li>{{ forloop.counter }} - {{ my_sub_item|capfirst|upper }}</li>
             {% elif not my_sub_item %}
-                <li>{{ forloop.counter }} - {{ my_sub_item }}</li>
+                <li>{{ forloop.counter }} - {{ my_sub_item|capfirst|upper }}</li>
             {% else %}
-                <li>{{ forloop.counter }} - {{ my_sub_item }}</li>
+                <li>{{ forloop.counter }} - {{ my_sub_item|capfirst|upper }}</li>
             {% endif %}
         {% endfor %}
     </ul>
