@@ -10,6 +10,12 @@ class ProductForm(forms.ModelForm):
             'description', 
             'price'
         ]
+    def clean_title(self, *args, **kwargs):
+        title = self.cleaned_data.get('title')
+        if not 'iPhone' in title:
+            raise forms.ValidationError('This is not a valid titile.')
+        return title
+            
 
 class RawProductForm(forms.Form):
     title       = forms.CharField()
