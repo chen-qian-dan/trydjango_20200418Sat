@@ -29,7 +29,7 @@ def product_delete_view(request, id):
 
 def dynamic_lookup_view(request, id):
     obj = get_object_or_404(Product, id=id)
-    obj.delete()
+    #obj.delete()
     context = {
         'object': obj
     }
