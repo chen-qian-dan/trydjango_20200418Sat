@@ -7,6 +7,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Article 
+from .forms import ArticleModelForm
 
 
 # Create your views here.
@@ -23,3 +24,13 @@ class ArticleDetailView(DetailView):
     def get_object(self):
         id_ = self.kwargs.get('id')
         return get_object_or_404(Article, id=id_)
+
+
+class ArticleCreateView(CreateView):
+    template_name = 'articles/article_create.html'
+    form_class = ArticleModelForm
+    queryset = Article.objects.all()
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
