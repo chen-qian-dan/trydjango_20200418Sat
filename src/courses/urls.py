@@ -6,7 +6,8 @@ from .views import (
 
 app_name = 'courses'
 urlpatterns = [
-    path('', CourseView.as_view(), name='courses-list'), 
+    path('', CourseView.as_view(template_name='home'), name='courses-list'), 
+    path('<int:id>/', CourseView.as_view(), name='courses-detail'),
     #path('', my_fbv, name='courses-list'), 
 
 ]
