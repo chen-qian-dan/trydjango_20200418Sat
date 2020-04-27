@@ -7,6 +7,38 @@ from .models import Course
 
 # BASE VIEW Class = VIEW 
 
+class CourseUpdateView(View):
+    template_name = 'courses/course_update.html'
+    def get_object(self):
+        id = self.kwargs.get('id')
+        obj = None 
+        if id is not None:
+            obj = get_object_or_404(Course, id=id)
+            context = {}
+            context['object'] = obj
+        return obj
+    
+    def get(self, request, id=None, *args, **kwargs):
+        context = {}
+        obj = self.get_object()
+        if obj is not None:
+            form = CourseModelForm(instance=obj)
+            context['object'] = obj
+            context['form'] = form 
+        return render(request, self.template_name, context)
+
+    def post(self, request, id=None, *args, **kwargs):
+        context = {}
+        obj = self.get_object()
+        form = CourseModelForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+        context['object'] = obj 
+        context['form'] = form
+        return render(request, self.template_name, context)
+
+
+
 class CourseCreateView(View):
     template_name = 'courses/course_create.html'
     def get(self, request, *args, **kwargs):
