@@ -7,8 +7,8 @@ from .models import Course
 
 # BASE VIEW Class = VIEW 
 
-class CourseDeleteView(View):
-    template_name = 'courses/course_delete.html'
+class CourseObjectMixin(object):
+    model = Course 
     def get_object(self):
         id = self.kwargs.get('id')
         obj = None
@@ -16,6 +16,9 @@ class CourseDeleteView(View):
             obj = get_object_or_404(Course, id=id)
         return obj 
 
+
+class CourseDeleteView(CourseObjectMixin, View):
+    template_name = 'courses/course_delete.html'
     def get(self, request, id=None, *args, **kwargs):
         context = {}
         obj = self.get_object()
@@ -34,7 +37,7 @@ class CourseDeleteView(View):
 
 
 
-class CourseUpdateView(View):
+class CourseUpdateView(CourseObjectMixin, View):
     template_name = 'courses/course_update.html'
     def get_object(self):
         id = self.kwargs.get('id')
@@ -94,13 +97,10 @@ class CourseListView(View):
         return render(request, self.template_name, context)
 
 
-class CourseView(View): # make CourseView acts for both about and detail view
+class CourseView(CourseObjectMixin, View): # make CourseView acts for both about and detail view
     template_name = 'courses/course_detail.html'
     def get(self, request, id=None, *args, **kwargs):
-        context = {}
-        if id is not None:
-            obj = get_object_or_404(Course, id=id)
-            context['object'] = obj
+        context = {'object': self.get_object()}
         return render(request, self.template_name, context)
 
     # def post(request, *args, **kwargs):
